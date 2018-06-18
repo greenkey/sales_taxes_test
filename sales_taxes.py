@@ -41,3 +41,7 @@ def get_category_patterns():
     except json.decoder.JSONDecodeError:
         raise Exception(f"The file '{filename}', " +
                         "is malformed, it should be a JSON.")
+
+
+def is_imported(product_description):
+    return "imported" in product_description

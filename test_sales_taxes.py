@@ -34,3 +34,20 @@ def test_get_product_category():
 
     for prod_description, category_expected in cases:
         assert get_category(prod_description) == category_expected
+
+
+def test_recognise_imported_product():
+    cases = [
+        ("book", False),
+        ("music CD", False),
+        ("chocolate bar", False),
+        ("imported box of chocolates", True),
+        ("imported bottle of perfume", True),
+        ("imported bottle of perfume", True),
+        ("bottle of perfume", False),
+        ("packet of headache pills", False),
+        ("box of imported chocolates", True),
+    ]
+
+    for product_description, expected_imported_flag in cases:
+        assert is_imported(product_description) == expected_imported_flag
