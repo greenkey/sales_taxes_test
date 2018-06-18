@@ -14,5 +14,8 @@ def get_category(product_description):
 
     if "chocolate" in product_description:
         return "food"
+    
+    if "headache" in product_description:
+        return "medical"
 
     return product_description

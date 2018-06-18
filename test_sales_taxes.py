@@ -10,6 +10,10 @@ def test_get_rate():
         ("laptop", 10.0),
         ("music CD", 10.0),
         ("chocolate bar", 0.0),
+        ("box of chocolates", 0.0),
+        ("bottle of perfume", 10.0),
+        ("headache pills", 0.0),
+        ("chocolates", 0.0),
     ]
 
     for product, expected_rate in cases:
