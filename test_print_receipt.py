@@ -9,7 +9,10 @@ def test_parse_input_line():
     assert p["description"] == "book"
     assert p["price"] == Decimal("12.49")
 
-    p = parse_input_line("1 box of imported chocolates at 11.25")
-    assert p["quantity"] == 1
+    p = parse_input_line("100 box of imported chocolates at 11.25")
+    assert p["quantity"] == 100
     assert p["description"] == "box of imported chocolates"
     assert p["price"] == Decimal("11.25")
+
+    p = parse_input_line("music CD at 14.99")
+    assert p == None

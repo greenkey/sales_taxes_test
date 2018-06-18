@@ -9,10 +9,14 @@ def main():
 
 
 def parse_input_line(line):
-    m = re.match(r"^([0-9]) (.*) at ([0-9\.]+)", line)
+    m = re.match(r"^([0-9]+) +(.*) +at +([0-9\.]+)", line)
+
+    if m is None:
+        return None
+
     return {
         "quantity": int(m.group(1)),
-        "description": m.group(2),
+        "description": m.group(2).strip(),
         "price": Decimal(m.group(3)),
     }
 
