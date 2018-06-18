@@ -8,7 +8,19 @@ def test_get_rate():
         ("perfume", 10.0),
         ("car", 10.0),
         ("laptop", 10.0),
+        ("music CD", 10.0),
+        ("chocolate bar", 0.0),
     ]
 
     for product, expected_rate in cases:
         assert get_rate(product) == expected_rate
+
+
+def test_get_product_category():
+    cases = [
+        ("chocolate bar", "food"),
+        ("unknown product", "unknown")
+    ]
+
+    for prod_description, category_expected in cases:
+        assert get_category(prod_description) == category_expected
