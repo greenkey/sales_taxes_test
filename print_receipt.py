@@ -3,7 +3,7 @@ import re
 from decimal import Decimal
 import math
 
-from sales_taxes import get_rate
+from sales_taxes import get_rate, is_imported
 
 
 def main():
@@ -24,9 +24,14 @@ def get_items_from_file(file_handler):
 def produce_final_output(items):
     output = []
     for item in items:
+
+        description = item["clean_description"]
+        if item["imported"]:
+            description = "imported " + description
+
         output.append("{} {}: {:.2f}".format(
             item["quantity"],
-            item["description"],
+            description,
             item["price"] + item["taxes"],
         ))
 
@@ -47,10 +52,20 @@ def parse_input_line(line):
     if m is None:
         return None
 
+    full_description = clean_description = m.group(2).strip()
+
+    imported = is_imported(full_description)
+    if imported:
+        clean_description = full_description.replace(
+            "imported", "").replace(
+            "  ", " ").strip()
+
     return {
         "quantity": int(m.group(1)),
-        "description": m.group(2).strip(),
+        "description": full_description,
         "price": Decimal(m.group(3)),
+        "imported": imported,
+        "clean_description": clean_description
     }
 
 

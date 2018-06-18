@@ -12,10 +12,12 @@ def test_parse_input_line():
     p = parse_input_line("100 box of imported chocolates at 11.25")
     assert p["quantity"] == 100
     assert p["description"] == "box of imported chocolates"
+    assert p["imported"] is True
+    assert p["clean_description"] == "box of chocolates"
     assert p["price"] == Decimal("11.25")
 
     p = parse_input_line("music CD at 14.99")
-    assert p == None
+    assert p is None
 
 
 def test_add_taxes_to_item():
