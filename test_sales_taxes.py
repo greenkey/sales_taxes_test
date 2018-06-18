@@ -43,7 +43,6 @@ def test_recognise_imported_product():
         ("chocolate bar", False),
         ("imported box of chocolates", True),
         ("imported bottle of perfume", True),
-        ("imported bottle of perfume", True),
         ("bottle of perfume", False),
         ("packet of headache pills", False),
         ("box of imported chocolates", True),
@@ -51,3 +50,14 @@ def test_recognise_imported_product():
 
     for product_description, expected_imported_flag in cases:
         assert is_imported(product_description) == expected_imported_flag
+
+
+def test_additional_taxt_for_imported_prod():
+    cases = [
+        ("imported box of chocolates", 5.0),
+        ("imported bottle of perfume", 15.0),
+        ("box of imported chocolates", 5.0),
+    ]
+
+    for product, expected_rate in cases:
+        assert get_rate(product) == expected_rate

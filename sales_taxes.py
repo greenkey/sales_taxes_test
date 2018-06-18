@@ -3,10 +3,16 @@ import re
 
 
 def get_rate(product_description):
+    rate = 10.0
+
     category = get_category(product_description)
     if category in ["book", "food", "medical"]:
-        return 0.0
-    return 10.0
+        rate = 0.0
+
+    if is_imported(product_description):
+        rate += 5.0
+
+    return rate
 
 
 def get_category(product_description):
