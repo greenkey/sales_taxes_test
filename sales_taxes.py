@@ -1,23 +1,22 @@
 import json
 import re
+from decimal import Decimal
 
 
 def get_rate(product_description):
-    rate = 10.0
+    rate = Decimal(10)
 
     category = get_category(product_description)
     if category in ["book", "food", "medical"]:
-        rate = 0.0
+        rate = Decimal(0)
 
     if is_imported(product_description):
-        rate += 5.0
+        rate = rate + Decimal(5)
 
     return rate
 
 
 def get_category(product_description):
-    product_description = product_description.lower().strip()
-
     product_description = product_description.replace("product", "").strip()
 
     category_patterns = get_category_patterns()
