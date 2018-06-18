@@ -1,20 +1,22 @@
+from decimal import Decimal
+
 from sales_taxes import *
 
 
 def test_get_rate():
     cases = [
-        ("book", 0.0),
-        ("food", 0.0),
-        ("medical product", 0.0),
-        ("perfume", 10.0),
-        ("car", 10.0),
-        ("laptop", 10.0),
-        ("music CD", 10.0),
-        ("chocolate bar", 0.0),
-        ("box of chocolates", 0.0),
-        ("bottle of perfume", 10.0),
-        ("headache pills", 0.0),
-        ("chocolates", 0.0),
+        ("book", Decimal(".0")),
+        ("food", Decimal(".0")),
+        ("medical product", Decimal(".0")),
+        ("perfume", Decimal(".10")),
+        ("car", Decimal(".10")),
+        ("laptop", Decimal(".10")),
+        ("music CD", Decimal(".10")),
+        ("chocolate bar", Decimal(".0")),
+        ("box of chocolates", Decimal(".0")),
+        ("bottle of perfume", Decimal(".10")),
+        ("headache pills", Decimal(".0")),
+        ("chocolates", Decimal(".0")),
     ]
 
     for product, expected_rate in cases:
@@ -54,9 +56,9 @@ def test_recognise_imported_product():
 
 def test_additional_taxt_for_imported_prod():
     cases = [
-        ("imported box of chocolates", 5.0),
-        ("imported bottle of perfume", 15.0),
-        ("box of imported chocolates", 5.0),
+        ("imported box of chocolates", Decimal(".05")),
+        ("imported bottle of perfume", Decimal(".15")),
+        ("box of imported chocolates", Decimal(".05")),
     ]
 
     for product, expected_rate in cases:

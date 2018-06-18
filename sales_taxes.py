@@ -4,14 +4,14 @@ from decimal import Decimal
 
 
 def get_rate(product_description):
-    rate = Decimal(10)
+    rate = Decimal(".10")
 
     category = get_category(product_description)
     if category in ["book", "food", "medical"]:
-        rate = Decimal(0)
+        rate = Decimal("0")
 
     if is_imported(product_description):
-        rate = rate + Decimal(5)
+        rate = rate + Decimal(".05")
 
     return rate
 
