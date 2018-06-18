@@ -23,7 +23,6 @@ def get_category(product_description):
 
     for category, patterns in category_patterns.items():
         for pattern in patterns:
-            print(pattern, product_description)
             if re.match(pattern, product_description):
                 return category
 
