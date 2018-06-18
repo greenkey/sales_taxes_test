@@ -1,5 +1,6 @@
 from sales_taxes import *
 
+
 def test_get_rate():
     cases = [
         ("book", 0.0),
