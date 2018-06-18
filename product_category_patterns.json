@@ -1,0 +1,11 @@
+{
+    "medical": [
+        ".*[a-z]+ache.*"
+    ],
+    "self-care": [
+        ".*cream"
+    ],
+    "food": [
+        ".*chocolate.*"
+    ]
+}

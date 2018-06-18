@@ -24,8 +24,13 @@ def test_get_rate():
 def test_get_product_category():
     cases = [
         ("chocolate bar", "food"),
-        ("unknown product", "unknown")
+        ("unknown product", "unknown"),
+        ("chocolate face cream", "self-care"),
+        ("headache pills", "medical"),
+        ("stomachache cream", "medical"),
     ]
+
+    # TODO: mock get_category_patterns
 
     for prod_description, category_expected in cases:
         assert get_category(prod_description) == category_expected
