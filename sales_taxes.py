@@ -4,7 +4,26 @@ import math
 from decimal import Decimal
 
 
+""" This module contains utilities to manipulate receipt items and to calculate
+    taxes on them.
+"""
+
+
 def get_rate(product_description, imported=False):
+    """ Returns the tax rate for a given product description.
+
+    The calculation is based on the category of the product.
+    For other information on tax calculation, see main documentation.
+
+    Args:
+        product_description (str): The description of the product.
+        imported (bool): default=False; Is the product an imported one?
+
+    Returns:
+        Decimal: the tax rate. Using Decimal for maximum precision.
+
+    """
+
     rate = Decimal(".10")
 
     category = get_category(product_description)
@@ -18,6 +37,19 @@ def get_rate(product_description, imported=False):
 
 
 def get_category(product_description):
+    """ Retrieve the category based on the product description.
+
+    Every category has a set of regexp patterns (see `get_category_patterns`)
+    used to match the product description.
+
+    Args:
+        product_description (str): The description of the product.
+
+    Returns:
+        str: The category.
+
+    """
+
     product_description = product_description.replace("product", "").strip()
 
     category_patterns = get_category_patterns()
@@ -31,6 +63,16 @@ def get_category(product_description):
 
 
 def get_category_patterns():
+    """ Retrieve all the patterns to match the products into categories.
+
+    WARNING: currently the function has an hard-coded filename:
+    `product_category_patterns.json`.
+
+    Returns:
+        dict: The list of regexp patterns for every product category.
+
+    """
+
     # TODO: make the filename a setting
     filename = "product_category_patterns.json"
 
