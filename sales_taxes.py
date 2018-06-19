@@ -49,3 +49,43 @@ def get_category_patterns():
 
 def is_imported(product_description):
     return "imported" in product_description
+
+
+class Item():
+
+    description_parser = r"^([0-9]+) +(.*) +at +([0-9\.]+)"
+
+    def parse_description(self, description):
+        """Read a string containing item information and tries to parse them.
+
+        The string should be something like:
+        `<no. of items> <item description> <cost of single item>`
+        In the item description there could be the string "imported", this will
+        set the imported flag in the object.
+
+        Args:
+            description (str): The string to be parsed.
+
+        Returns:
+            bool: True for success, False otherwise.
+
+        """
+
+        m = re.match(self.description_parser, description)
+
+        if m is None:
+            return False
+
+        self.full_description = m.group(2).strip().lower()
+        self.clean_description = self.full_description
+
+        self.imported = is_imported(self.full_description)
+        if self.imported:
+            self.clean_description = self.full_description.replace(
+                "imported", "").replace(
+                "  ", " ").strip()
+
+        self.quantity = int(m.group(1))
+        self.price = Decimal(m.group(3))
+
+        return True
