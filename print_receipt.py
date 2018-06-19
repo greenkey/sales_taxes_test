@@ -21,8 +21,8 @@ def get_items_from_file(file_handler):
 
 def produce_final_output(items):
     output = []
-    for item in items:
 
+    for item in items:
         output.append(str(item))
 
     output.append("Sales Taxes: {}".format(
