@@ -92,15 +92,27 @@ def test_create_item_from_description():
     assert item.parse_description(desc) is False
 
 
+def test_total_tax():
+    item = Item()
+    item.parse_description("1 imported something at 12.49")
+
+    item.quantity = 5
+    item.tax_rate = Decimal("0.15")
+    assert item.total_tax == Decimal("9.40")
+
+
 def test_total_price():
     item = Item()
 
     item.parse_description("1 book at 12.49")
+    assert item.total_tax == 0
     assert item.total_price == Decimal("12.49")
 
     item.quantity = 3
+    assert item.total_tax == 0
     assert item.total_price == Decimal("12.49") * 3
 
     item.quantity = 5
     item.tax_rate = Decimal("0.15")
-    assert item.total_price == Decimal("12.49") * 5 * (1+Decimal("0.15"))
+    assert item.total_tax == Decimal("9.40")
+    assert item.total_price == Decimal("12.49") * 5 + Decimal("9.40")

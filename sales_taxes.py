@@ -1,5 +1,6 @@
 import json
 import re
+import math
 from decimal import Decimal
 
 
@@ -103,7 +104,13 @@ class Item():
 
     @property
     def total_price(self):
-        return (self.price * (1+self.tax_rate)) * self.quantity
+        return self.price * self.quantity + self.total_tax
+
+    @property
+    def total_tax(self):
+        raw_tax = self.tax_rate * self.price * self.quantity
+        # rounding up to the nearest 0.05
+        return math.ceil(raw_tax / Decimal("0.05")) * Decimal("0.05")
 
     @property
     def imported(self):
