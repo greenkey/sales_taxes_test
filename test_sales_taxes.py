@@ -51,7 +51,9 @@ def test_recognise_imported_product():
     ]
 
     for product_description, expected_imported_flag in cases:
-        assert is_imported(product_description) == expected_imported_flag
+        item = Item()
+        item.parse_description(product_description)
+        assert item.imported == expected_imported_flag
 
 
 def test_additional_taxt_for_imported_prod():
@@ -62,7 +64,9 @@ def test_additional_taxt_for_imported_prod():
     ]
 
     for product, expected_rate in cases:
-        assert get_rate(product) == expected_rate
+        item = Item()
+        item.parse_description(product)
+        assert item.tax_rate == expected_rate
 
 
 def test_create_item_from_description():

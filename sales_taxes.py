@@ -3,14 +3,14 @@ import re
 from decimal import Decimal
 
 
-def get_rate(product_description):
+def get_rate(product_description, imported=False):
     rate = Decimal(".10")
 
     category = get_category(product_description)
     if category in ["book", "food", "medical"]:
         rate = Decimal("0")
 
-    if is_imported(product_description):
+    if imported:
         rate = rate + Decimal(".05")
 
     return rate
@@ -47,13 +47,9 @@ def get_category_patterns():
                         "is malformed, it should be a JSON.")
 
 
-def is_imported(product_description):
-    return "imported" in product_description
-
-
 class Item():
 
-    description_parser = r"^([0-9]+) +(.*) +at +([0-9\.]+)"
+    description_parser = r"^(([0-9]+) +)?([\w ]*)( +at +([0-9\.]+))?$"
 
     def parse_description(self, description):
         """Read a string containing item information and tries to parse them.
@@ -71,30 +67,47 @@ class Item():
 
         """
 
+        self.full_description = self.clean_description = ""
+        self.tax_rate = 0
+        self.quantity = 0
+        self.price = 0
+
         m = re.match(self.description_parser, description)
 
         if m is None:
             return False
 
-        self.full_description = m.group(2).strip()
+        success = True
+
+        self.full_description = m.group(3).strip()
         self.clean_description = self.full_description
 
-        self.imported = is_imported(self.full_description)
         if self.imported:
             self.clean_description = self.full_description.replace(
                 "imported", "").replace(
                 "  ", " ").strip()
 
-        self.quantity = int(m.group(1))
-        self.price = Decimal(m.group(3))
+        self.tax_rate = get_rate(self.full_description, self.imported)
 
-        self.tax_rate = get_rate(self.full_description)
+        try:
+            self.quantity = int(m.group(2))
+        except TypeError:
+            success = False
 
-        return True
+        try:
+            self.price = Decimal(m.group(5))
+        except TypeError:
+            success = False
+
+        return success
 
     @property
     def total_price(self):
         return (self.price * (1+self.tax_rate)) * self.quantity
+
+    @property
+    def imported(self):
+        return "imported" in self.full_description
 
     def __str__(self):
         """The string representation of the object, for output purposes
