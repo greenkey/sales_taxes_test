@@ -56,7 +56,7 @@ def test_recognise_imported_product():
         assert item.imported == expected_imported_flag
 
 
-def test_additional_taxt_for_imported_prod():
+def test_additional_tax_for_imported_prod():
     cases = [
         ("imported box of chocolates", Decimal(".05")),
         ("imported bottle of perfume", Decimal(".15")),
