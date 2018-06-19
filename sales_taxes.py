@@ -76,7 +76,7 @@ class Item():
         if m is None:
             return False
 
-        self.full_description = m.group(2).strip().lower()
+        self.full_description = m.group(2).strip()
         self.clean_description = self.full_description
 
         self.imported = is_imported(self.full_description)
@@ -88,4 +88,18 @@ class Item():
         self.quantity = int(m.group(1))
         self.price = Decimal(m.group(3))
 
+        self.tax_rate = get_rate(self.full_description)
+
         return True
+
+    @property
+    def total_price(self):
+        return (self.price * (1+self.tax_rate)) * self.quantity
+
+    def __str__(self):
+        """The string representation of the object, for output purposes
+        """
+
+        imported_string = "imported " if self.imported else ""
+
+        return f"{self.quantity} {imported_string}{self.clean_description}: {self.total_price:.2f}"

@@ -86,3 +86,17 @@ def test_create_item_from_description():
 
     desc = "music CD at 14.99"
     assert item.parse_description(desc) is False
+
+
+def test_total_price():
+    item = Item()
+
+    item.parse_description("1 book at 12.49")
+    assert item.total_price == Decimal("12.49")
+
+    item.quantity = 3
+    assert item.total_price == Decimal("12.49") * 3
+
+    item.quantity = 5
+    item.tax_rate = Decimal("0.15")
+    assert item.total_price == Decimal("12.49") * 5 * (1+Decimal("0.15"))
